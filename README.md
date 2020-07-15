@@ -338,5 +338,5 @@ assert(say('Bob', 'Howdy', 'smoke signal') ==
 ```
 
 Nhìn vào ví dụ trên ta có thể thấy rằng sự khác nhau giữa 2 kiểu này chính là:
- - Khi không truyền param `device` trong `Positional` thì sẽ không xử lý param này
+ - Khi không truyền param `device` trong `Positional` thì sẽ `KHÔNG` xử lý param này
  - Khi không truyền param `device` trong `Default` thì vẫn xử lý param này
