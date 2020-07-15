@@ -220,5 +220,122 @@ assert(number < 100);
 assert(urlString.startsWith('https'));
 ```
 
+# Function
+
+Ví dụ
+```
+bool isNoble(int atomicNumber) {
+  return _nobleGases[atomicNumber] != null;
+}
+```
+
+Ngoài ra ta không cần khai báo giá trị trả về thì function vẫn chạy nếu trả về đúng điều kiện. Cách này `Không Recommend`
+```
+isNoble(atomicNumber) {
+  return _nobleGases[atomicNumber] != null;
+}
+```
+
+Với single statement thì có thể viết dưới dạng shorthand `=>` sau
+```
+bool isNoble(int atomicNumber) => _nobleGases[atomicNumber] != null;
+```
+
+#### Optional parameters
+
+Optional parameter có thể là kiểu `named` hoặc là `positional`, nhưng không phải chứa cả 2.
+
+##### Named parameters
+
+Khi bạn gọi function, bạn có thể đặt tên parameter bằng ```parameterName: value`. Ví dụ
+```
+enableFlags(bold: true, hidden: false);
+```
+
+Khi khai báo function, sử dụng `{param1, param2, ...}` để đặt tên parameters
+```
+/// Sets the [bold] and [hidden] flags ...
+void enableFlags({bool bold, bool hidden}) {...}
+```
+
+Mặc dù tên parameters là loại optional parameter, nhưng chung ta có thể bắt buộc người sử dụng hàm phải cung cấp giá trị parameter đó bằng cách sử dụng annotate `@required`
+```
+const Scrollbar({Key key, @required Widget child})
+```
+
+##### Positional parameters
+
+Ví dụ
+```
+String say(String from, String msg, [String device]) {
+  var result = '$from says $msg';
+  if (device != null) {
+    result = '$result with a $device';
+  }
+  return result;
+}
+```
+
+Dưới đây là cách gọi function trên mà không truyền giá trị cho `device`
+```
+assert(say('Bob', 'Howdy') == 'Bob says Howdy');
+```
+
+Dưới đây là cách gọi funtion mà có truyền giá trị cho `device`
+```
+assert(say('Bob', 'Howdy', 'smoke signal') ==
+    'Bob says Howdy with a smoke signal');
+```
+
+##### Default parameters value
+
+Function của bạn có thể sử dụng dấu `=` để định nghĩa giá trị mặc định cho cả `named` và `positional` parameters. Nếu không có giá trị mặc định được cấp, thì giá trị sẽ là `null`
+
+Dưới đây là ví dụ cài đặt giá trị mặc định cho `named` parameters
+```
+/// Sets the [bold] and [hidden] flags ...
+void enableFlags({bool bold = false, bool hidden = false}) {...}
+
+// bold will be true; hidden will be false.
+enableFlags(bold: true);
+```
 
 
+
+##### Compare Positional parameter and Default parameters
+
+Ví dụ
+`Positional`
+```
+String say(String from, String msg, [String device]) {
+  var result = '$from says $msg';
+  if (device != null) {
+    result = '$result with a $device';
+  }
+  return result;
+}
+
+assert(say('Bob', 'Howdy') == 'Bob says Howdy');
+assert(say('Bob', 'Howdy', 'smoke signal') ==
+    'Bob says Howdy with a smoke signal');
+```
+
+`Default`
+```
+String say(String from, String msg, {String device = ""}) {
+  var result = '$from says $msg';
+  if (device != null) {
+    result = '$result with a $device';
+  }
+  return result;
+}
+
+assert(say('Bob', 'Howdy') == 'Bob says Howdy with a ');
+assert(say('Bob', 'Howdy', 'smoke signal') ==
+    'Bob says Howdy with a smoke signal');
+
+```
+
+Nhìn vào ví dụ trên ta có thể thấy rằng sự khác nhau giữa 2 kiểu này chính là:
+ - Khi không truyền param `device` trong `positional` thì sẽ không xử lý param này
+ - Khi không truyền param `device` trong `default` thì vẫn xử lý param này
