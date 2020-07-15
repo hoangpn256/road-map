@@ -305,6 +305,7 @@ enableFlags(bold: true);
 ##### Compare Positional parameter and Default parameters
 
 Ví dụ
+
 `Positional`
 ```
 String say(String from, String msg, [String device]) {
@@ -337,5 +338,5 @@ assert(say('Bob', 'Howdy', 'smoke signal') ==
 ```
 
 Nhìn vào ví dụ trên ta có thể thấy rằng sự khác nhau giữa 2 kiểu này chính là:
- - Khi không truyền param `device` trong `positional` thì sẽ không xử lý param này
- - Khi không truyền param `device` trong `default` thì vẫn xử lý param này
+ - Khi không truyền param `device` trong `Positional` thì sẽ không xử lý param này
+ - Khi không truyền param `device` trong `Default` thì vẫn xử lý param này
