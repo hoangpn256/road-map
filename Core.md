@@ -265,7 +265,7 @@ assert(ingredients.contains('titanium'));
 assert(ingredients.containsAll(['titanium', 'xenon']));
 ```
 
-Ngoài ra Dart còn cung cấp rất nhiều function của `Set` khác [tại đây]("https://api.dart.dev/stable/2.8.4/dart-core/Set-class.html")
+Ngoài ra Dart còn cung cấp rất nhiều function của `Set` khác [tại đây](https://api.dart.dev/stable/2.8.4/dart-core/Set-class.html)
 
 ##### Map
 
@@ -326,7 +326,7 @@ assert(values.length == 3);
 assert(values.any((v) => v.contains('Waikiki')));
 ```
 
-Danh sách các function Dart hỗ trợ `Map` [tại đây]("https://api.dart.dev/stable/2.8.4/dart-core/Map-class.html")
+Danh sách các function Dart hỗ trợ `Map` [tại đây](https://api.dart.dev/stable/2.8.4/dart-core/Map-class.html)
 
 ##### Common collection methods
 
