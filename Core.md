@@ -40,3 +40,46 @@ assert(123.456.toStringAsFixed(2) == '123.46');
 
 #### Strings and regular expressions
 
+Class `Strings` cung cấp các function `split()`, `contain()`, `startsWith()`, `endWith()` và nhiều hơn thế nữa.
+
+##### Searching inside a string
+
+Bạn có thể tìm kiếm chuỗi theo ví dụ dưới đây
+```
+// Check whether a string contains another string.
+assert('Never odd or even'.contains('odd'));
+
+// Does a string start with another string?
+assert('Never odd or even'.startsWith('Never'));
+
+// Does a string end with another string?
+assert('Never odd or even'.endsWith('even'));
+
+// Find the location of a string inside a string.
+assert('Never odd or even'.indexOf('odd') == 6);
+```
+
+##### Extracting data from a string
+
+Sử dụng `split()` với chuỗi rỗng `''` để lấy được tất cả `characters` trong `String`
+```
+for (var char in 'hello'.split('')) {
+  print(char); // h e l l o
+}
+```
+
+Lấy `UTF-16` trong chuỗi bằng cách sử dụng `index` của nó (kết quả là `String`)
+```
+assert('Never odd or even'[0] == 'N');
+```
+
+hoặc lấy `UTF-16` theo mã ACSII
+```
+var codeUnitList =
+    'Never odd or even'.codeUnits.toList();
+assert(codeUnitList[0] == 78);
+```
+
+##### Converting to uppercase or lowercase
+
+
