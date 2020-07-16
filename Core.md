@@ -389,3 +389,173 @@ assert(!teas.every(isDecaffeinated));
 
 # Asynchronous programming
 
+Trong kĩ thuật `Asynchronous`, thường chúng ta sử dụng `callback` function, nhưng đối với Dart cung cấp 2 khái niệm là `Future` và `Stream` object.
+`Future` giống với `Promise` trong JS, còn `Stream` là cách để nhận dữ liệu tuần tự, giống như `events`.
+
+
+**Note**
+>  Bạn không phải lúc nào cũng sử dụng `Future` hay `Stream`. Dart hỗ trợ asynchronous bằng cách sử dụng `async` và `await`.
+
+#### Future
+
+`Future` thường sử dụng trong asynchronous. Khi một future *hoàn thanh*, giá trị của nó đã sẵn sàng để sử dụng.
+Áp dụng trong các bài toán 
+
+*  Call api lấy data từ server
+*  Đọc/ghi dữ liệu vào Database
+*  Đọc/ghi dữ liệu vào File
+
+Có 2 trạng thái khi sử dụng `Future`, đó là `Uncompleted` và `Completed`
+
+#### Uncompleted
+
+Trong khi gọi asynchronous function, `Future` sẽ trả về `uncompleted` future. Future này sẽ đợi đến khi thực thi xong quá trình bất đồng bộ, sau đó sẽ trả về success hoặc trả về exception
+
+#### Completed
+
+Sau khi thực thi xong quá trình bất đồng bộ, future thành công sẽ trả về giá trị, còn không sẽ bắn về lỗi
+
+##### Completing with a value
+
+Một future thuộc `Future<T>` sau khi thực thi xong sẽ trả về giá trị `T`. Ví dụ một future loại `Future<String>` sau khi thực thi xong sẽ trả về `String`.
+Nếu một future không trả về giá trị, ta khai báo `Future<Void>`
+
+##### Completing with an error
+
+Nếu trong quá trình thực thi bất đồng bộ có lỗi vì 1 lý do bất kỳ, future sẽ ném về ngoại lệ.
+
+##### Using await
+
+Trước khi tìm hiểu về `Future`, bạn cần hiêu về `await` trước.
+Code sử dụng `await` dễ hiểu hơn sử dụng `Future`.
+
+* Để khai báo async function, thêm `async` trước body của function đó.
+* Keyword `await` chỉ sử dụng được trong async function.
+
+Cách khai báo
+```
+void main() async { ··· }
+```
+
+Nếu function của bạn cần trả về kết quả, thì sẽ được viết như dưới đây
+```
+Future<String> createOrderMessage() async {
+  var order = await fetchUserOrder();
+  return 'Your order is: $order';
+}
+
+Future<String> fetchUserOrder() =>
+    // Imagine that this function is
+    // more complex and slow.
+    Future.delayed(
+      Duration(seconds: 2),
+      () => 'Large Latte',
+    );
+
+Future<void> main() async {
+  print('Fetching user order...');
+  print(`await` createOrderMessage());
+  print("...End fetching");
+}
+```
+
+##### Execution flow with async and await
+
+`async` function thực đồng bộ cho đến khi gặp từ khóa `await` đầu tiên.
+
+Theo ví dụ dưới đây, `Future` sử dụng `then()` để thực hiện 3 asynchronous trong 1 dòng lệnh, đợi từng lệnh một thực hiện xong trước khi chuyển qua lệnh mới.
+```
+runUsingFuture() {
+  // ...
+  findEntryPoint().then((entryPoint) {
+    return runExecutable(entryPoint, args);
+  }).then(flushThenExit);
+}
+```
+
+Nếu sử dụng `await` với đoạn code trên ta sẽ có ví dụ như dưới
+```
+runUsingAsyncAwait() async {
+  // ...
+  var entryPoint = await findEntryPoint();
+  var exitCode = await runExecutable(entryPoint, args);
+  await flushThenExit(exitCode);
+}
+```
+
+`async` function có thể bắt ngoại lệ của `Future`, xem ví dụ dưới đây
+```
+var entryPoint = await findEntryPoint();
+try {
+  var exitCode = await runExecutable(entryPoint, args);
+  await flushThenExit(exitCode);
+} catch (e) {
+  // Handle the error...
+}
+```
+
+###### Basic usage
+
+Bạn có thể sử dụng `then()` để thực thi code khi future hoành thành.
+Ví dụ, `HttpRequest.getString()` trả về future, sử dụng `then()` để trả về giá trị `String`
+```
+HttpRequest.getString(url).then((String result) {
+  print(result);
+});
+```
+
+Dùng `catchError()` để bắt exception
+```
+HttpRequest.getString(url).then((String result) {
+  print(result);
+}).catchError((e) {
+  // Handle or ignore the error.
+});
+```
+
+**Note**
+> `then().catchError()` là pattern asynchronous của `try-catch`
+
+
+##### Chaining multiple asynchronous methods
+
+`then()` được sử dụng trong multiple asynchoronous. Ví dụ
+```
+Future result = costlyQuery(url);
+result
+    .then((value) => expensiveWork(value))
+    .then((_) => lengthyComputation())
+    .then((_) => print('Done!'))
+    .catchError((exception) {
+  /* Handle exception... */
+});
+```
+
+Chuyển ví dụ trên qua `await` ta được
+```
+try {
+  final value = await costlyQuery(url);
+  await expensiveWork(value);
+  await lengthyComputation();
+  print('Done!');
+} catch (e) {
+  /* Handle exception... */
+}
+```
+
+##### Waiting for multiple futures
+
+Dưới đây là ví dụ về cách đợi multiple futures
+```
+Future deleteLotsOfFiles() async =>  ...
+Future copyLotsOfFiles() async =>  ...
+Future checksumLotsOfOtherFiles() async =>  ...
+
+await Future.wait([
+  deleteLotsOfFiles(),
+  copyLotsOfFiles(),
+  checksumLotsOfOtherFiles(),
+]);
+print('Done with all the long steps!');
+```
+# I/O for servers and command-line apps
