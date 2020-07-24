@@ -22,9 +22,9 @@
 
 <img src="./images/KraI1Pu.jpg">
 
-- Users
-- Groups - Nhóm các users
-- Roles
+- Users - Là tài khoản với sự uỷ nhiệm, được tạo và cấp quyền bời tài khoản root.1 tài khoản User bao gồm username, console password, access key, secret key
+- Groups - Nhóm các users, ngoài ra, 1 user cũng có thể thuộc về nhiều groups.
+- Roles - Là 1 tập các quyền mà bạn có thể sử dụng để truy cập các tài nguyên AWS mà bạn cần. Tuy nhiên, bạn không đăng nhập vào role, role không có password hay access keys mà bạn có thể switch sang role sau khi đăng nhập bằng user của bạn. Có thể hiểu role là một tài khoản tạm thời để giải quyết những công việc khác nhau với vai trò khác nhau.
 - Polocies - được đính kèm theo User/Group/Role trong IAM, chúng quy định những hành động nào được phép hoặc không được phép truy cập.
 - MFA(Multi-factor Authentication) là 1 lớp bảo mật đặt trên username và password. Khi enable MFA, ngoài username và password, user khi đăng nhập sẽ phải điền authentication code nhận được từ MFA.
 => Sử dụng MFA để bảo vệ ngay cả khi bạn bị lộ username và password.
