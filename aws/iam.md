@@ -31,7 +31,7 @@
 
 <a name='head4' />
 
-### **4. Example tips**
+### **4. Examination tips**
 
 - IAM là service global.
 - Account đầu tiên được tạo sẽ mặc định là root account.
