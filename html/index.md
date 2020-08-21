@@ -1,3 +1,5 @@
+##### Tác giả: Nguyễn Thuỳ Linh (linhnt)
+
 # HTML Home
 1. [HTML Basic](component/html_basic.md)
 2. [Writing semantic HTML](component/html_semantic.md)

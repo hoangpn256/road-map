@@ -10,7 +10,7 @@ Semantic HTML (hay Viết HTML có ngữ nghĩa) là cách viết HTML mà sử 
 - Non-Semantic: `<div>Click Me</div>`
 - Semantic: `<button>Click Me</button>`
 
-Bạn có thể tham khảo thêm [tại đây](./html_semantic.md)
+Bạn có thể tham khảo thêm [tại đây](html_semantic.md)
 
 #### 2. Nội dung văn bản
 Một trong những khả năng tiếp cận tốt nhất mà người dùng đọc màn hình có thể có là một cấu trúc nội dung tuyệt vời với các tiêu đề, đoạn văn, danh sách,...

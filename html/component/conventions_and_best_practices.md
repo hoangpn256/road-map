@@ -46,7 +46,7 @@ Ví dụ: nội dung bên trong thẻ `<title>` sẽ xuất hiện trong trang k
 - Theo dự thảo mới nhất về đặc tả HTML của W3C, `<div>` là một yếu tố vô nghĩa nên được sử dụng là một giải pháp cuối cùng, vì khi không có yếu tố nào khác phù hợp.
 - Từ phiên bản HTML5 đã cho ra đời một số thẻ như `<section>`, `<main>`,... giúp các thành phần trong trang của bạn trở nên có nghĩa hơn.
 
-Bạn có thể tham khảo thêm [tại đây](./html_semantic.md)
+Bạn có thể tham khảo thêm [tại đây](html_semantic.md)
 
 #### 5. Sử dụng các thẻ tiêu đề một cách khôn khéo
 - Các tiêu đề HTML được xác định bằng các thẻ `<h1>` đến `<h6>`.
