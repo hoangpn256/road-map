@@ -23,24 +23,24 @@ tìm kiếm phân tán, giao diện web HTTP có hỗ trợ dữ liệu Json
 #### 2. Các khái niệm cơ bản
 - Document: là một JSON object, đây là basic information unit trong ES. Đây là đơn vị nhỏ nhất để lưu dữ liệu trong ES.
 
-![document](elasticsearch/image/document.png)
+![document](image/document.png)
 
 - Index: Mỗi index là một tập hợp các document.
 - Type: Một định nghĩa về schema của một document bên trong một index. (một index có thể có nhiều type)
 
-![index](elasticsearch/image/index.png)
+![index](image/index.png)
 
 Nhìn trong ảnh ta sẽ thấy 1 document sẽ có 1 trường type. Đây chính là định danh của một document.
 
   - ES sử dụng cấu trúc **inverted index**, được thiết kế cho việc tìm kiếm full-text-search.
   
-  ![inverted%20index](elasticsearch/image/inverted%20index.png)
+  ![inverted%20index](image/inverted%20index.png)
   
   - Khi search, đầu vào sẽ được tách ra thành các từ có nghĩa (term), dựa vào term tìm ra các doc có chứa term và đưa ra các doc tương đồng với tỉ lệ trùng khớp là **score**
 
 - Cluster: 
 
-![cluster](elasticsearch/image/cluster.png)
+![cluster](image/cluster.png)
 
   - Cluster là nơi chứa tất cả mọi thứ, là một hệ thống bao gồm nhiều node(máy chủ).
   - Trong cluster có thể có rất nhiều node - node là nơi xử lý và lưu trữ dữ liệu.
@@ -55,7 +55,7 @@ Vì sao lại phải phân ra 2 loại như vậy thì sẽ giải thích bên d
 
 #### 3. Mô hình hoạt động cluster-node-shard
 
-![cluster-node-shard](elasticsearch/image/cluster-node-shard.png)
+![cluster-node-shard](image/cluster-node-shard.png)
 
 Đầu tiên, hãy chú ý đến node master. Như đã nói ở trên, node master sẽ được chọn một cách tự động và ngẫu nhiên. 
 - PS là shard chính, là nơi chịu trách nhiệm đánh index và lưu dữ liệu. 
@@ -66,7 +66,7 @@ Vì sao lại phải phân ra 2 loại như vậy thì sẽ giải thích bên d
 
 #### 4. Mô hình hoạt động (lưu trữ)
 
-![save_document](elasticsearch/image/save_document.png)
+![save_document](image/save_document.png)
 
    - Request được gửi đến node master. Tại đây, với thuật toán round-robin, xác định được shard dùng để lưu trữ. Trong trường hợp này hệ thống tính ra được sẽ lưu dữ liệu vào shard0.
    - Hệ thống tim được PS0 ở node 3. Tiến hành đánh index và lưu dữ liệu vào PS0.
@@ -74,7 +74,7 @@ Vì sao lại phải phân ra 2 loại như vậy thì sẽ giải thích bên d
    
 #### 5. Mô hình hoạt động (lấy dữ liệu)
 
-![get_document](elasticsearch/image/get_document.png)
+![get_document](image/get_document.png)
 
   - Request được gửi tới node master. Tại đây xác định PS cho document sẽ là 0.
   - Do tất cả node đều lưu dữ liệu, nên master node sẽ chọn ra 1 node và lấy dữ liệu ở shard số 0. Việc chọn này giúp giảm tập trung vào một node. Thuật toán Round-robin được sử dụng để các shard được chọn khác nhau ở mỗi request. Trong trường hợp này Node 2 được chọn.
